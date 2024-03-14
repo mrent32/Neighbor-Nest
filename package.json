@@ -19,6 +19,7 @@
     "@apollo/server": "^4.10.0",
     "casual": "^1.6.2",
     "cors": "^2.8.5",
+    "jsonwebtoken": "^8.5.1",
     "stripe": "^14.20.0"
   }
 }
