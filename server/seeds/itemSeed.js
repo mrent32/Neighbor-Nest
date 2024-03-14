@@ -27,3 +27,5 @@ async function seedItems() {
         console.error('Error seeding items:', err);
     }
 }
+
+module.exports = seedItems;
