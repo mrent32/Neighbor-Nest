@@ -8,6 +8,7 @@ const itemSchema = new Schema({
     price: {
         type: Number,
         required: true,
+        defaut: 0.99
     },
     description: {
         type: String,
@@ -17,8 +18,22 @@ const itemSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Category',
         required: true
+    },
+    inStock: {
+        type: Boolean,
+        default: true
+    },
+    image: {
+        type: String,
+        default: "/images/placeholderimage.png"
     }
-});
+},
+{
+    toJSON: {
+        virtuals: true
+    }
+}
+);
 
 const Item = model('Item', itemSchema);
 

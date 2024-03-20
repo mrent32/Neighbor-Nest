@@ -27,6 +27,12 @@ const userSchema = new Schema({
     orders: [
       Order.schema
     ],
+    cart: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Item'
+        }
+    ],
     // This is for user to add item to sell
     items: [
         {

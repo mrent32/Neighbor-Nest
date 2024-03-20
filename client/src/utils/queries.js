@@ -35,6 +35,7 @@ export const GET_ITEMS = gql `
         name
         price
         description
+        inStock
     }
   }
 `;
@@ -72,6 +73,28 @@ export const GET_CATEGORIES = gql `
   }
 `;
 
+export const QUERY_CHECKOUT = gql`
+  query getCheckout($products: [ID]!) {
+    checkout(products: $products) {
+      session
+    }
+  }
+`;
+
+export const VIEW_CART = gql`
+  query viewCart {
+    viewCart {
+      cart {
+        _id
+        name
+        description
+        image
+        price
+        inStock
+      }
+    }
+  }
+`
 
 
 

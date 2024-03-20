@@ -1,17 +1,29 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, get } = require('mongoose');
+const orderItemSchema = require('./orderItem')
 
 const orderSchema = new Schema({
-    purchaseDate: {
+    orderDate: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        get: formatTimestamp
     },
-    items: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Item'
-        }
-    ]
-});
+    orderStatus: {
+        type:String, 
+        default: "Draft"
+    },
+    items: [orderItemSchema]
+},
+{
+    toJSON: {
+        virtuals: true,
+        getters: true
+    }
+}
+);
+
+function formatTimestamp(timestamp) {
+    return `${timestamp.toLocaleDateString()} at ${timestamp.toLocaleTimeString()}`
+}
 
 const Order = model('Order', orderSchema)
 

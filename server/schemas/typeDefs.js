@@ -21,6 +21,7 @@ type User {
     description: String!
     price: Float!
     category: Category!
+    inStock: Boolean
   }
 
   type Order {
@@ -49,6 +50,7 @@ type User {
     checkout(items: [ID]!): Checkout
     users: [User]
     category(_id: ID!): Category
+    viewCart: User
   }
 
   type RemoveItemPayload {
@@ -64,6 +66,9 @@ type User {
     removeItem(userId: ID!, itemId: ID!): RemoveItemPayload
     updateItem(_id: ID!, quantity: Int!): Item
     login(email: String!, password: String!): Auth
+    addToCart(item: ID!): User
+    removeFromCart(item: ID!): User
+    clearCart: User
   }
 `;
 

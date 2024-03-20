@@ -66,6 +66,9 @@ const resolvers = {
             }
             throw AuthenticationError;
         },
+        viewCart: async (parent, args, context) => {
+            return await User.findOne( {_id: context.user._id} ).populate("cart")
+        },
         // This will checkout an order items
         checkout: async (parent, args, context) => {
             const url = new URL(context.headers.referer).origin;
@@ -130,6 +133,58 @@ const resolvers = {
             }
 
             throw AuthenticationError
+        },
+        
+        addToCart: async (parent, { item }, context) => {
+            const user = await User.findOneAndUpdate(
+                {
+                    _id: context.user._id
+                },
+                {
+                    $push: { cart: item }
+                },
+                {
+                    new: true
+                }
+            ).populate('cart');
+            return(user);
+        },
+        removeFromCart: async (parent, { item }, context) => {
+            const user = await User.findOneAndUpdate(
+                {
+                    _id: context.user._id
+                },
+                {
+                    $pull: 
+                        {
+                            'cart': item
+                        }
+                },
+                {
+                    new: true
+                }
+            )
+            .populate('cart');
+            return user;
+        },
+        clearCart: async (parent, args, context) => {
+            console.log("Clearing cart...");
+            const user = await User.findOneAndUpdate(
+                {
+                    _id: context.user._id
+                },
+                {
+                    $set:
+                    {
+                        'cart': []
+                    }
+                },
+                {
+                    new: true
+                }
+            ).populate('cart');
+            console.log(user);
+            return user;
         },
         // adds item to users  - Tested
         addItem: async (parent, { name, price, description, category }, context) => {
